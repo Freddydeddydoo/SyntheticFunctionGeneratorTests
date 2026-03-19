@@ -3,4 +3,4 @@
 - `npm install -g aws-sdk`
 - install AWS CLI
 - install AWS SAM
-- setup AWS configuration file ~/.aws/credentials
+- setup AWS configuration file ~/.aws/credentials 
