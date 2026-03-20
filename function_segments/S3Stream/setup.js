@@ -6,7 +6,7 @@ async function setup() {
   const params = {
     Bucket: "long.ma.s3stream.{{.BucketName}}",
     CreateBucketConfiguration: {
-      LocationConstraint: "eu-west-1"
+      LocationConstraint: "us-west-2"
     }
   };
   try {

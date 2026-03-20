@@ -40,7 +40,7 @@ func RunServer() {
 func proxyHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	funcName := vars["funcName"]
-	lambdaClient := lambda.New(sess, aws.NewConfig().WithRegion("eu-west-1"))
+	lambdaClient := lambda.New(sess, aws.NewConfig().WithRegion("us-west-2"))
 	result, err := lambdaClient.Invoke(&lambda.InvokeInput{FunctionName: aws.String(funcName)})
 	if err != nil {
 		log.WithField("in function", "proxyHandler").WithField("function", funcName).WithField("step", "invoke").Error(err)
@@ -69,7 +69,7 @@ func proxyHandler(w http.ResponseWriter, r *http.Request) {
 func proxyWarmupHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	funcName := vars["funcName"]
-	lambdaClient := lambda.New(sess, aws.NewConfig().WithRegion("eu-west-1"))
+	lambdaClient := lambda.New(sess, aws.NewConfig().WithRegion("us-west-2"))
 	warmupPayload, err := json.Marshal(payload{
 		Warmup: true,
 	})
