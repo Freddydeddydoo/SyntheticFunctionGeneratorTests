@@ -35,7 +35,7 @@ async function handler(event, payload) {
     child_process.execSync("cat /proc/net/dev | grep vinternal_1| awk '{print $2,$3,$10,$11}'").toString().split(" ");
 
   const AWS = require("aws-sdk");
-  const dynamodb = new AWS.DynamoDB({region: "eu-west-1"});
+  const dynamodb = new AWS.DynamoDB({region: "us-west-2"});
   const { v4: uuidv4 } = require('uuid');
   if(!event.warmup)
     await dynamodb.putItem({
