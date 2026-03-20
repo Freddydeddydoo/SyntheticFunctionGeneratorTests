@@ -19,7 +19,6 @@ import (
 	"synthetic-function-generator/util"
 
 	"github.com/goombaio/namegenerator"
-	"github.com/markbates/pkger"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
 )
@@ -63,18 +62,15 @@ func init() {
 	generateCmd.MarkFlagRequired("lambda-role-arn")
 }
 
-// segmentConfig contains configuration specific to a function segment
 type segmentConfig struct {
 	Variables      []string          `yaml:"variables"`
 	FilesToInclude []string          `yaml:"files"`
 	Packages       map[string]string `yaml:"packages"`
 }
 
-// subgeneratorData contains data for the first step generation of function segment parts
 type subgeneratorData []map[string]string
 type includedFilesData map[string]string
 
-// generatorData contains multiple Setup, Teardown and Function elements and variables used for the second step generation
 type generatorData struct {
 	FunctionName string
 	FunctionSize int
@@ -86,17 +82,14 @@ type generatorData struct {
 	DepLayerArn  string
 }
 
-// setup represents one encapsulated abstraction of a setup block
 type setup struct {
 	Code string
 }
 
-// teardown represents one encapsulated abstraction of a teardown block
 type teardown struct {
 	Code string
 }
 
-// function represents one encapsulated abstraction of a function block
 type function struct {
 	Code string
 }
@@ -270,10 +263,7 @@ func generateSetup(functionSegments []string, subgenData subgeneratorData) []set
 		if err := setupTmpl.Execute(&setupCode, subgenData[i]); err != nil {
 			log.Fatal("Error executing setup template")
 		}
-		templates = append(templates,
-			setup{
-				Code: setupCode.String(),
-			})
+		templates = append(templates, setup{Code: setupCode.String()})
 	}
 	return templates
 }
@@ -290,10 +280,7 @@ func generateFunction(functionSegments []string, subgenData subgeneratorData) []
 		if err := functionTmpl.Execute(&functionCode, subgenData[i]); err != nil {
 			log.Fatal("Error executing function template")
 		}
-		templates = append(templates,
-			function{
-				Code: functionCode.String(),
-			})
+		templates = append(templates, function{Code: functionCode.String()})
 	}
 	return templates
 }
@@ -310,10 +297,7 @@ func generateTeardown(functionSegments []string, subgenData subgeneratorData) []
 		if err := teardownTmpl.Execute(&teardownCode, subgenData[i]); err != nil {
 			log.Fatal("Error executing teardown template")
 		}
-		templates = append(templates,
-			teardown{
-				Code: teardownCode.String(),
-			})
+		templates = append(templates, teardown{Code: teardownCode.String()})
 	}
 	return templates
 }
@@ -330,20 +314,19 @@ func copyFilesToInclude(filesToInclude includedFilesData, funcName string) {
 }
 
 func executeTemplate(templateFileName string, variables generatorData) {
-	sourceFile, err := pkger.Open(fmt.Sprintf("/templates/%s.tmpl", templateFileName))
+	templatePath := fmt.Sprintf("templates/%s.tmpl", templateFileName)
+	content, err := ioutil.ReadFile(templatePath)
 	if err != nil {
 		log.Fatalf("Couldn't read %s template file", templateFileName)
-	}
-	defer sourceFile.Close()
-	content, err := ioutil.ReadAll(sourceFile)
-	if err != nil {
-		log.Fatalf("Couldn't read %s template file contents", templateFileName)
 	}
 	tmpl, err := template.New(templateFileName).Parse(string(content))
 	if err != nil {
 		log.Fatalf("Could not parse %s template", templateFileName)
 	}
 	targetFile, err := os.Create(fmt.Sprintf("./build/%s/%s", variables.FunctionName, templateFileName))
+	if err != nil {
+		log.Fatalf("Could not create output file for %s", templateFileName)
+	}
 	defer targetFile.Close()
 	tmpl.Execute(targetFile, variables)
 }

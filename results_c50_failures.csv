@@ -1,0 +1,2 @@
+Method,Name,Error,Occurrences
+Lambda,floatoperations-512,TooManyRequestsException('An error occurred (TooManyRequestsException) when calling the Invoke operation (reached max retries: 4): Rate Exceeded.'),2
