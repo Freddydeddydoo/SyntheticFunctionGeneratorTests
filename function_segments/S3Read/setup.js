@@ -6,7 +6,7 @@ exports.setup = async () => {
   const params = {
     Bucket: "long.ma.s3read.{{.BucketName}}",
     CreateBucketConfiguration: {
-      LocationConstraint: "eu-west-1"
+      LocationConstraint: "us-west-2"
     }
   };
   try {

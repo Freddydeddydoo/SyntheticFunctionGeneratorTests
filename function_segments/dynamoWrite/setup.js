@@ -2,7 +2,7 @@
 async function setup() {
   // START SETUP
   const AWS = require(root + "/aws-sdk");
-  const dynamodb = new AWS.DynamoDB({ region: "eu-west-1" });
+  const dynamodb = new AWS.DynamoDB({ region: "us-west-2" });
   const params = {
     AttributeDefinitions: [
       {
