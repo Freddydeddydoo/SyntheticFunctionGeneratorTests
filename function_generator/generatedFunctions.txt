@@ -1,0 +1,3 @@
+decompress
+dynamoWrite,readFile
+floatOperations

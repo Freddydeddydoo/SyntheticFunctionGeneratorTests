@@ -1,7 +1,7 @@
 async function func() {
   // START FUNCTION
   const AWS = require("aws-sdk");
-  const dynamodb = new AWS.DynamoDB({ region: "eu-west-1" });
+  const dynamodb = new AWS.DynamoDB({ region: "us-west-2" });
   const tableId = ~~(Math.random() * 5) + 1;
   await new Promise((res, rej) => {
     function onScan(err, data) {

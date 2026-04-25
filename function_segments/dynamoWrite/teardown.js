@@ -1,7 +1,7 @@
 async function teardown() {
   // START TEARDOWN
   const AWS = require(root + "/aws-sdk");
-  const dynamodb = new AWS.DynamoDB({ region: "eu-west-1" });
+  const dynamodb = new AWS.DynamoDB({ region: "us-west-2" });
   await dynamodb.deleteTable({
     TableName: `long.ma.dynamowrite.{{.TableName}}`
   }).promise();

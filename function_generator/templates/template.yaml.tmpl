@@ -16,7 +16,7 @@ Resources:
     Properties:
       CodeUri: ./
       Handler: function.handler
-      Runtime: nodejs12.x
+      Runtime: nodejs16.x
       Role: {{.RoleArn}}
       FunctionName: {{.FunctionName}}
       MemorySize: {{.FunctionSize}}

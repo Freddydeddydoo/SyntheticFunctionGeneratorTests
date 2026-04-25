@@ -194,7 +194,7 @@ func fetchResultData(funcName string) {
 		"netPkgTx",
 	})
 	sess := session.Must(session.NewSession())
-	dynamoClient := dynamodb.New(sess, aws.NewConfig().WithRegion("eu-west-1"))
+	dynamoClient := dynamodb.New(sess, aws.NewConfig().WithRegion("us-west-2"))
 	dynamoClient.ScanPages(&dynamodb.ScanInput{
 		TableName: &funcName,
 	}, func(result *dynamodb.ScanOutput, lastPage bool) bool {
